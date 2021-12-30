@@ -36,7 +36,7 @@ class ComicTaggerSettings:
         if folder is not None:
             folder = folder
         return folder
-    
+
     @staticmethod
     def baseDir():
         if getattr(sys, 'frozen', None):
@@ -94,6 +94,7 @@ class ComicTaggerSettings:
         self.clear_form_before_populating_from_cv = False
         self.remove_html_tables = False
         self.cv_api_key = ""
+        self.apply_cv_publisher_imprint_transform = False
 
         # CBL Tranform settings
 
@@ -156,8 +157,8 @@ class ComicTaggerSettings:
             if self.rar_exe_path != "":
                 self.save()
         if self.rar_exe_path != "":
-             # make sure rar program is now in the path for the rar class    
-            utils.addtopath(os.path.dirname(self.rar_exe_path))          
+             # make sure rar program is now in the path for the rar class
+            utils.addtopath(os.path.dirname(self.rar_exe_path))
 
     def reset(self):
         os.unlink(self.settings_file)
@@ -256,6 +257,9 @@ class ComicTaggerSettings:
                 'comicvine', 'remove_html_tables')
         if self.config.has_option('comicvine', 'cv_api_key'):
             self.cv_api_key = self.config.get('comicvine', 'cv_api_key')
+        if self.config.has_option('comicvine', 'apply_cv_publisher_imprint_transform'):
+            self.apply_cv_publisher_imprint_transform = self.config.getboolean(
+                'comicvine', 'apply_cv_publisher_imprint_transform' )
 
         if self.config.has_option(
                 'cbl_transform', 'assume_lone_credit_is_primary'):
@@ -409,6 +413,7 @@ class ComicTaggerSettings:
         self.config.set(
             'comicvine', 'remove_html_tables', self.remove_html_tables)
         self.config.set('comicvine', 'cv_api_key', self.cv_api_key)
+        self.config.set('comicvine', 'apply_cv_publisher_imprint_transform', self.apply_cv_publisher_imprint_transform)
 
         if not self.config.has_section('cbl_transform'):
             self.config.add_section('cbl_transform')

@@ -135,6 +135,8 @@ class SettingsWindow(QtWidgets.QDialog):
             self.cbxClearFormBeforePopulating.setCheckState(QtCore.Qt.Checked)
         if self.settings.remove_html_tables:
             self.cbxRemoveHtmlTables.setCheckState(QtCore.Qt.Checked)
+        if self.settings.apply_cv_publisher_imprint_transform:
+            self.cbxTransformCVPublisherImprint.setCheckState(QtCore.Qt.Checked)
         self.leKey.setText(str(self.settings.cv_api_key))
 
         if self.settings.assume_lone_credit_is_primary:
@@ -193,6 +195,7 @@ class SettingsWindow(QtWidgets.QDialog):
         self.settings.use_series_start_as_volume = self.cbxUseSeriesStartAsVolume.isChecked()
         self.settings.clear_form_before_populating_from_cv = self.cbxClearFormBeforePopulating.isChecked()
         self.settings.remove_html_tables = self.cbxRemoveHtmlTables.isChecked()
+        self.settings.apply_cv_publisher_imprint_transform = self.cbxTransformCVPublisherImprint.isChecked()
         self.settings.cv_api_key = str(self.leKey.text())
         ComicVineTalker.api_key = self.settings.cv_api_key.strip()
         self.settings.assume_lone_credit_is_primary = self.cbxAssumeLoneCreditIsPrimary.isChecked()

@@ -83,7 +83,7 @@ class ComicVineTalker(QObject):
     @staticmethod
     def getRateLimitMessage():
         if ComicVineTalker.api_key == "":
-            return "Comic Vine rate limit exceeded.  You should configue your own Comic Vine API key."
+            return "Comic Vine rate limit exceeded.  You should configure your own Comic Vine API key."
         else:
             return "Comic Vine rate limit exceeded.  Please wait a bit."
 
