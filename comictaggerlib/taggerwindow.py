@@ -770,9 +770,6 @@ class TaggerWindow(QtWidgets.QMainWindow):
                 field.setText(str(value))
         md = self.metadata
 
-        if self.settings.apply_cv_publisher_imprint_transform:
-            md = self.nejc_transform_cv_publisher_imprint(md)
-
         assignText(self.leSeries, md.series)
         assignText(self.leIssueNum, md.issue)
         assignText(self.leIssueCount, md.issueCount)
@@ -1717,9 +1714,6 @@ class TaggerWindow(QtWidgets.QMainWindow):
             if self.settings.apply_cbl_transform_on_cv_import:
                 cv_md = CBLTransformer(cv_md, self.settings).apply()
 
-            if self.settings.apply_cv_publisher_imprint_transform:
-                cv_md = self.nejc_transform_cv_publisher_imprint(cv_md)
-
         QtWidgets.QApplication.restoreOverrideCursor()
 
         return cv_md
@@ -2173,26 +2167,3 @@ class TaggerWindow(QtWidgets.QMainWindow):
             # self.show()
             self.setWindowFlags(flags)
             self.show()
-
-
-    def nejc_transform_cv_publisher_imprint(self, cv_md):
-        """
-        Quick and dirty way of fixing some imprints since ComicVine will most
-        probably never support the field properly - as-is imprints are handled
-        as publishers.
-
-        See pikahyper comment on ComicVine forum
-        https://comicvine.gamespot.com/forums/editing-tools-2761/imprints-vs-publisher-2119732/#js-message-24043092
-        """
-
-        # TODO this map should probably be moved to settings and made editable
-        transform_map={}
-        transform_map['Vertigo'] = {'publisher': 'DC Comics', 'imprint': 'Vertigo'}
-        transform_map['Max'] =     {'publisher': 'Marvel',    'imprint': 'Max'}
-
-        transform = transform_map.get( cv_md.publisher )
-        if transform is not None:
-            cv_md.publisher = transform['publisher']
-            cv_md.imprint = transform['imprint']
-
-        return cv_md

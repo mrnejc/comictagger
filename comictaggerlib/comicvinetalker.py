@@ -553,6 +553,9 @@ class ComicVineTalker(QObject):
         if len(arc_list) > 0:
             metadata.storyArc = utils.listToString(arc_list)
 
+        if settings.apply_cv_publisher_imprint_transform:
+            metadata = self.nejc_transform_cv_publisher_imprint(metadata)
+
         return metadata
 
     def cleanup_html(self, string, remove_html_tables):
@@ -847,3 +850,27 @@ class ComicVineTalker(QObject):
                 issue['image'] = dict()
                 issue['image']['super_url'] = ComicVineTalker.logo_url
                 issue['image']['thumb_url'] = ComicVineTalker.logo_url
+
+
+    def nejc_transform_cv_publisher_imprint(self, cv_md):
+        """
+        Quick and dirty way of fixing some imprints since ComicVine will most
+        probably never support the field properly - as-is imprints are handled
+        as publishers.
+
+        See pikahyper comment on ComicVine forum
+        https://comicvine.gamespot.com/forums/editing-tools-2761/imprints-vs-publisher-2119732/#js-message-24043092
+        """
+
+        # TODO this map should probably be moved to settings and made editable
+        transform_map={}
+        transform_map['Vertigo'] = {'publisher': 'DC Comics', 'imprint': 'Vertigo'}
+        transform_map['Max'] =     {'publisher': 'Marvel',    'imprint': 'Max'}
+        transform_map['Epic'] =    {'publisher': 'Marvel',    'imprint': 'Epic'}
+
+        transform = transform_map.get( cv_md.publisher )
+        if transform is not None:
+            cv_md.publisher = transform['publisher']
+            cv_md.imprint = transform['imprint']
+
+        return cv_md
