@@ -864,9 +864,21 @@ class ComicVineTalker(QObject):
 
         # TODO this map should probably be moved to settings and made editable
         transform_map={}
-        transform_map['Vertigo'] = {'publisher': 'DC Comics', 'imprint': 'Vertigo'}
-        transform_map['Max'] =     {'publisher': 'Marvel',    'imprint': 'Max'}
-        transform_map['Epic'] =    {'publisher': 'Marvel',    'imprint': 'Epic'}
+        transform_map['Minx'] =           {'publisher': 'DC Comics',         'imprint': 'Minx'}
+        transform_map['Helix'] =          {'publisher': 'DC Comics',         'imprint': 'Helix'}
+        transform_map['Vertigo'] =        {'publisher': 'DC Comics',         'imprint': 'Vertigo'}
+
+        transform_map['Maverick'] =       {'publisher': 'Dark Horse Comics', 'imprint': 'Maverick'}
+
+        transform_map['Icon Comics'] =    {'publisher': 'Marvel',            'imprint': 'Icon Comics'}
+        transform_map['Marvel Knights'] = {'publisher': 'Marvel',            'imprint': 'Marvel Knights'}
+        transform_map['Max'] =            {'publisher': 'Marvel',            'imprint': 'Max'}
+        transform_map['Max Comics'] =     {'publisher': 'Marvel',            'imprint': 'Max Comics'}
+        transform_map['Epic'] =           {'publisher': 'Marvel',            'imprint': 'Epic'}
+
+        transform_map['Desperado Publishing'] = {'publisher': 'Image', 'imprint': 'Desperado Publishing'}
+        transform_map['Skybound'] =             {'publisher': 'Image', 'imprint': 'Skybound'}
+        transform_map['Shadowline'] =           {'publisher': 'Image', 'imprint': 'Shadowline'}
 
         transform = transform_map.get( cv_md.publisher )
         if transform is not None:
